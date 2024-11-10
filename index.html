@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Malu Service Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+        :root {
+            --primary-brown: #8B4513;
+            --light-brown: #DEB887;
+            --cream: #FFF8DC;
+            --dark-brown: #654321;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: cursive;
+            scroll-margin-top: 15vh; 
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            padding: 20px;
+            background-image: url(https://github.com/MilkFish1010/image-museum/blob/main/MaDawg.jpg?raw=true);
+            background-size: contain;
+            background-attachment: fixed;
+        }
+
+        .dashboard-card {
+            background: rgb(243, 200, 170);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(139, 69, 19, 0.1);
+            padding: 1.5rem;
+            border: 10px solid var(--light-brown);
+            transition: transform 0.2s;
+            width: 320px;
+            height: 200px;
+            overflow: hidden;
+        }.dashboard-card2 {
+            background: rgb(243, 200, 170);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(139, 69, 19, 0.1);
+            padding: 10%;
+            border: 10px solid var(--light-brown);
+            transition: transform 0.2s;
+            width: 320px;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 50%;          
+            transform: translateX(-50%);  
+            background-color: rgba(171, 123, 93, 0.8);
+            padding: 15px;
+            display: flex;
+            justify-content: center;  
+            width: 100%;  
+            max-width: 800px; 
+            z-index: 9999;
+            border-radius: 15px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar li {
+            margin: 0 20px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #ffbe55;
+        }
+
+        .bg-primary-brown {
+            background-color: var(--primary-brown);
+        }
+
+        .text-cream {
+            color: var(--cream);
+        }
+
+        .text-primary-brown {
+            color: var(--primary-brown);
+        }
+
+        .chart-container {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            margin: 0 auto;
+        } .spin-image { width: 200px; margin: auto; transition: transform 0.5s ease-in-out; } .spin-image:hover { animation: spin 1s infinite linear; } @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="pt-24">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="#overview">📄Overview</a></li>
+            <li><a href="#charts">📊Charts</a></li>
+            <li><a href="#clients">🐶Client Directory</a></li>
+        </ul>
+    </nav>
+
+    <!-- Title Section -->
+    <img src="https://github.com/MilkFish1010/image-museum/blob/main/betbalu.png?raw=true" style="height: 500px; margin:auto;" alt="petmalu"><br><a href="https://milkfish1010.github.io/PetMalu/"><img src="https://github.com/MilkFish1010/image-museum/blob/main/ccat.png?raw=true" class="spin-image" alt="Moving Image" height="50px" width="50px"></a><p style="margin: auto; text-align: center; font-size: larger; color: white;"><strong>↑</strong><br>Click 😺cat😺 to go to PetMalu's main page!!</p>
+    <br><br><br><br><br><br><br><br><br><br><br><br><hr><br><br><br><br><br><br><br><br><br><br><br>
+    <!-- Main Content Container -->
+    <div class="container mx-auto px-4 py-8" id="overview">
+        <!-- Metric Cards Section -->
+        <div class="flex flex-wrap justify-center gap-8 mb-8">
+            <div class="dashboard-card text-center">
+                <h2 class="text-lg font-semibold mb-2">🐱 Total Clients This Month</h2>
+                <p class="text-3xl font-bold" id="totalClients">0</p>
+            </div>
+            <div class="dashboard-card text-center">
+                <h2 class="text-lg font-semibold mb-2">💰 Weekly Revenue</h2>
+                <p class="text-3xl font-bold" id="weeklyRevenue">₱0</p>
+                <p class="text-xl" id="weeklyCost">Cost: ₱0</p>
+                <p class="text-xl" id="weeklyProfit">Profit: ₱0</p>
+            </div>
+            <div class="dashboard-card text-center">
+                <h2 class="text-lg font-semibold mb-2">⭐ Most Popular Service</h2>
+                <p class="text-3xl font-bold" id="popularService">-</p>
+            </div>
+        </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><br><br><br><br><br><br><br><br><br><br><br>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8" id="charts">
+            <div class="dashboard-card2 chart-container">
+                <h2 class="text-xl font-semibold mb-4">🐾 Pet Types</h2>
+                <canvas id="petTypeChart" class="w-full h-full"></canvas>
+            </div>
+            <div class="dashboard-card2 chart-container">
+                <h2 class="text-xl font-semibold mb-4">📊 Services Breakdown</h2>
+                <canvas id="servicesChart" class="w-full h-full"></canvas>
+            </div>
+        </div>
+
+        <!-- Revenue Trend Chart -->
+        <div class="dashboard-card chart-container mb-8">
+            <h2 class="text-xl font-semibold mb-4">📈 Weekly Revenue and Cost Trend</h2>
+            <canvas id="revenueChart" class="w-full h-full"></canvas>
+        </div><br><br><br><br><hr><br><br><br>
+
+        <!-- Client Directory -->
+        <div class="dashboard-card mb-8" style="height: auto; width: 1000px; margin: auto;" id="clients">
+            <h2 class="text-xl font-semibold mb-4">📋 Client Directory</h2>
+            <table class="min-w-full text-center">
+                <thead>
+                    <tr class="bg-primary-brown text-white">
+                        <th>Owner Name</th>
+                        <th>Contact Number</th>
+                        <th>Pet Name</th>
+                        <th>Pet Type</th>
+                        <th>Service</th>
+                    </tr>
+                </thead>
+                <tbody id="clientList"></tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        // Mock data with costs added
+        const data = [
+            { owner_name: "Maria Santos", contact: "+63 915 123 4567", pet_name: "Luna", pet_type: "cat", pet_service: "nail clipping", revenue: 35, cost: 15 },
+            { owner_name: "Juan Dela Cruz", contact: "+63 917 234 5678", pet_name: "Max", pet_type: "cat", pet_service: "grooming", revenue: 80, cost: 35 },
+            { owner_name: "Ana Reyes", contact: "+63 918 345 6789", pet_name: "Boots", pet_type: "cat", pet_service: "bathing", revenue: 50, cost: 20 },
+            { owner_name: "Rico Torres", contact: "+63 919 456 7890", pet_name: "Oreo", pet_type: "cat", pet_service: "bathing", revenue: 35, cost: 15 },
+            { owner_name: "Elena Garcia", contact: "+63 920 567 8901", pet_name: "Coco", pet_type: "cat", pet_service: "grooming", revenue: 80, cost: 35 },
+            { owner_name: "Pedro Lim", contact: "+63 921 678 9012", pet_name: "Rocky", pet_type: "dog", pet_service: "grooming", revenue: 120, cost: 50 },
+            { owner_name: "Sofia Cruz", contact: "+63 922 789 0123", pet_name: "Bella", pet_type: "dog", pet_service: "bathing", revenue: 60, cost: 25 },
+            { owner_name: "Miguel Tan", contact: "+63 923 890 1234", pet_name: "Charlie", pet_type: "dog", pet_service: "nail clipping", revenue: 40, cost: 15 },
+            { owner_name: "Isabella Go", contact: "+63 924 901 2345", pet_name: "Fluffy", pet_type: "rabbit", pet_service: "grooming", revenue: 50, cost: 20 },
+            { owner_name: "Ramon Aquino", contact: "+63 925 012 3456", pet_name: "Cotton", pet_type: "rabbit", pet_service: "nail clipping", revenue: 30, cost: 10 },
+            { owner_name: "Carmen Flores", contact: "+63 926 123 4567", pet_name: "Nibbles", pet_type: "rodent", pet_service: "nail clipping", revenue: 30, cost: 10 },
+            { owner_name: "Luis Ramos", contact: "+63 927 234 5678", pet_name: "Peanut", pet_type: "rodent", pet_service: "grooming", revenue: 40, cost: 15 }
+        ];
+    
+        // Update metrics
+        document.getElementById('totalClients').textContent = data.length;
+        const totalRevenue = data.reduce((sum, client) => sum + client.revenue, 0);
+        const totalCost = data.reduce((sum, client) => sum + client.cost, 0);
+        const totalProfit = totalRevenue - totalCost;
+        document.getElementById('weeklyRevenue').textContent = `₱${totalRevenue.toLocaleString()}`;
+        document.getElementById('weeklyCost').textContent = `Cost: ₱${totalCost.toLocaleString()}`;
+        document.getElementById('weeklyProfit').textContent = `Profit: ₱${totalProfit.toLocaleString()}`;
+    
+        // Calculate most popular service
+        const serviceCounts = data.reduce((acc, curr) => {
+            acc[curr.pet_service] = (acc[curr.pet_service] || 0) + 1;
+            return acc;
+        }, {});
+        const mostPopularService = Object.entries(serviceCounts)
+            .reduce((a, b) => a[1] > b[1] ? a : b)[0];
+        document.getElementById('popularService').textContent = mostPopularService;
+    
+        // Brown theme colors
+        const colors = ['#8B4513', '#DEB887', '#D2691E', '#CD853F'];
+    
+        // Pet Types Chart
+        const petCounts = data.reduce((acc, curr) => {
+            acc[curr.pet_type] = (acc[curr.pet_type] || 0) + 1;
+            return acc;
+        }, {});
+    
+        new Chart(document.getElementById('petTypeChart'), {
+            type: 'pie',
+            data: {
+                labels: Object.keys(petCounts),
+                datasets: [{
+                    data: Object.values(petCounts),
+                    backgroundColor: colors
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    
+        // Group service data by type
+        const serviceCountsUpdated = {
+            grooming: data.filter(client => client.pet_service === 'grooming').length,
+            bathing: data.filter(client => client.pet_service === 'bathing').length,
+            'nail clipping': data.filter(client => client.pet_service === 'nail clipping').length
+        };
+    
+        // Define colors for each service
+        const serviceColors = {
+            grooming: '#8B4513',
+            bathing: '#DEB887',
+            'nail clipping': '#D2691E'
+        };
+    
+        // Create the Services Chart
+        new Chart(document.getElementById('servicesChart'), {
+            type: 'bar',
+            data: {
+                labels: Object.keys(serviceCountsUpdated).map(service =>
+                    service.split(' ').map(word =>
+                        word.charAt(0).toUpperCase() + word.slice(1)
+                    ).join(' ')
+                ),
+                datasets: [{
+                    label: 'Number of Services',
+                    data: Object.values(serviceCountsUpdated),
+                    backgroundColor: Object.keys(serviceCountsUpdated).map(service => serviceColors[service]),
+                    borderColor: Object.keys(serviceCountsUpdated).map(service => serviceColors[service]),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            generateLabels: function(chart) {
+                                const data = chart.data;
+                                if (data.labels.length && data.datasets.length) {
+                                    return data.labels.map((label, index) => {
+                                        return {
+                                            text: label,
+                                            fillStyle: data.datasets[0].backgroundColor[index],
+                                            strokeStyle: data.datasets[0].borderColor[index],
+                                            lineWidth: 1,
+                                            hidden: false,
+                                            index: index
+                                        };
+                                    });
+                                }
+                                return [];
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    
+        // Revenue and Cost Chart
+        const weekLabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+        const weeklyRevenues = [350, 450, 600, 500];
+        const weeklyCosts = [150, 200, 250, 220];
+    
+        new Chart(document.getElementById('revenueChart'), {
+            type: 'line',
+            data: {
+                labels: weekLabels,
+                datasets: [{
+                    label: 'Revenue (₱)',
+                    data: weeklyRevenues,
+                    borderColor: '#8B4513',
+                    fill: false,
+                    tension: 0.4
+                },
+                {
+                    label: 'Cost (₱)',
+                    data: weeklyCosts,
+                    borderColor: '#CD853F',
+                    fill: false,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 700,
+                        min: 0,
+                        ticks: {
+                            callback: value => '₱' + value.toLocaleString()
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                }
+            }
+        });
+    
+        // Populate client list
+        const clientList = document.getElementById('clientList');
+        data.forEach(client => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${client.owner_name}</td>
+                <td>${client.contact}</td>
+                <td>${client.pet_name}</td>
+                <td class="capitalize">${client.pet_type}</td>
+                <td class="capitalize">${client.pet_service}</td>
+            `;
+            clientList.appendChild(row);
+        });
+        document.addEventListener('keydown', function (e) {
+      if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '0')) {
+          e.preventDefault();
+      }
+  });
+  // Disable zooming with mouse wheel
+document.addEventListener('wheel', function (e) {
+    if (e.ctrlKey) {
+        e.preventDefault();
+    }
+}, { passive: false });
+    </script>
+    
+    
+</body>
+</html>
