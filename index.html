@@ -18,7 +18,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: cursive;
-            scroll-margin-top: 15vh; 
+            scroll-margin-top: 8vh; 
             margin: auto;
         }
 
@@ -31,7 +31,11 @@
             background-size: contain;
             background-attachment: fixed;
         }
-
+h2 {
+    text-align: center;
+    margin: auto;
+    color: #FFF8DC;
+}
         .dashboard-card {
             background: rgb(243, 200, 170);
             border-radius: 15px;
@@ -118,6 +122,7 @@
     <!-- Navigation Bar -->
     <nav class="navbar">
         <ul>
+            <li><a href="#main">⭐Main</a></li>
             <li><a href="#overview">📄Overview</a></li>
             <li><a href="#charts">📊Charts</a></li>
             <li><a href="#clients">🐶Client Directory</a></li>
@@ -125,11 +130,12 @@
     </nav>
 
     <!-- Title Section -->
-    <img src="https://github.com/MilkFish1010/image-museum/blob/main/betbalu.png?raw=true" style="height: 500px; margin:auto;" alt="petmalu"><br><a href="https://milkfish1010.github.io/PetMalu/"><img src="https://github.com/MilkFish1010/image-museum/blob/main/ccat.png?raw=true" class="spin-image" alt="Moving Image" height="50px" width="50px"></a><p style="margin: auto; text-align: center; font-size: larger; color: white;"><strong>↑</strong><br>Click 😺cat😺 to go to PetMalu's main page!!</p>
-    <br><br><br><br><br><br><br><br><br><br><br><br><hr><br><br><br><br><br><br><br><br><br><br><br>
+    <img id="main" src="https://github.com/MilkFish1010/image-museum/blob/main/betbalu.png?raw=true" style="height: 500px; margin:auto;" alt="petmalu"><br><a href="https://milkfish1010.github.io/PetMalu/"><img src="https://github.com/MilkFish1010/image-museum/blob/main/ccat.png?raw=true" class="spin-image" alt="Moving Image" height="50px" width="50px"></a><p style="margin: auto; text-align: center; font-size: larger; color: white;"><strong>↑</strong><br>Click 😺cat😺 to go to PetMalu's main page!!</p>
+    <br><br><br><br><br><br><br><br><br><br><br><br><hr><br><br><br><br><h1 style="font-size: 50px; text-align: center; color: #fdffbf;" id="overview">⭐Overview</h1><br>
     <!-- Main Content Container -->
-    <div class="container mx-auto px-4 py-8" id="overview">
+    <div class="container mx-auto px-4 py-8">
         <!-- Metric Cards Section -->
+         
         <div class="flex flex-wrap justify-center gap-8 mb-8">
             <div class="dashboard-card text-center">
                 <h2 class="text-lg font-semibold mb-2">🐱 Total Clients This Month</h2>
@@ -146,10 +152,10 @@
                 <p class="text-3xl font-bold" id="popularService">-</p>
             </div>
             <br><img style="margin: auto;" src="https://github.com/MilkFish1010/image-museum/blob/main/DAR-removebg-preview.png?raw=true">
-        </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><br><br><br><br><br><br><br><br><br><br><br>
-
+        </div><br><br><hr><br><br><br><h1 style="font-size: 50px; text-align: center; color: #fdffbf;" id="charts">🗃️Charts</h1><br><br><br>
+        
         <!-- Charts Section -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8" id="charts">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             <div class="dashboard-card2 chart-container">
                 <h2 class="text-xl font-semibold mb-4">🐾 Pet Types</h2>
                 <canvas id="petTypeChart" class="w-full h-full"></canvas>
@@ -164,11 +170,10 @@
         <div class="dashboard-card chart-container mb-8">
             <h2 class="text-xl font-semibold mb-4">📈 Weekly Revenue and Cost Trend</h2>
             <canvas id="revenueChart" class="w-full h-full"></canvas>
-        </div><br><br><br><br><hr><br><br><br>
+        </div><br><br><br><br><hr><br><br><h1 style="font-size: 50px; text-align: center; color: #fdffbf;">👥Client Directory</h1><br>
 
         <!-- Client Directory -->
         <div class="dashboard-card mb-8" style="height: auto; width: 1000px; margin: auto;" id="clients">
-            <h2 class="text-xl font-semibold mb-4">📋 Client Directory</h2>
             <table class="min-w-full text-center">
                 <thead>
                     <tr class="bg-primary-brown text-white">
