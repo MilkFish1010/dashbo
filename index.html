@@ -116,6 +116,7 @@ h2 {
             height: 400px;
             margin: 0 auto;
         } .spin-image { width: 200px; margin: auto; transition: transform 0.5s ease-in-out; } .spin-image:hover { animation: spin 1s infinite linear; } @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
     </style>
 </head>
 <body class="pt-24">
@@ -323,48 +324,61 @@ h2 {
     
         // Revenue and Cost Chart
         const weekLabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
-        const weeklyRevenues = [350, 450, 600, 500];
-        const weeklyCosts = [150, 200, 250, 220];
-    
-        new Chart(document.getElementById('revenueChart'), {
-            type: 'line',
-            data: {
+const weeklyRevenues = [350, 450, 600, 500];
+const weeklyCosts = [150, 200, 250, 220];
+
+new Chart(document.getElementById('revenueChart'), {
+    type: 'line',
+    data: {
+        labels: weekLabels, // Ensure this contains your week labels
+        datasets: [{
+            label: 'Revenue (₱)',
+            data: weeklyRevenues,
+            borderColor: '#8B4513',
+            fill: false,
+            tension: 0.4
+        },
+        {
+            label: 'Cost (₱)',
+            data: weeklyCosts,
+            borderColor: '#CD853F',
+            fill: false,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: { // Ensures the X-axis displays week labels
+                type: 'category',
                 labels: weekLabels,
-                datasets: [{
-                    label: 'Revenue (₱)',
-                    data: weeklyRevenues,
-                    borderColor: '#8B4513',
-                    fill: false,
-                    tension: 0.4
-                },
-                {
-                    label: 'Cost (₱)',
-                    data: weeklyCosts,
-                    borderColor: '#CD853F',
-                    fill: false,
-                    tension: 0.4
-                }]
+                title: {
+                    display: true,
+                    text: 'Weeks'
+                }
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 700,
-                        min: 0,
-                        ticks: {
-                            callback: value => '₱' + value.toLocaleString()
-                        }
-                    }
+            y: {
+                beginAtZero: true,
+                max: 700,
+                min: 0,
+                ticks: {
+                    callback: value => '₱' + value.toLocaleString()
                 },
-                plugins: {
-                    legend: {
-                        position: 'top'
-                    }
+                title: {
+                    display: true,
+                    text: 'Amount (₱)'
                 }
             }
-        });
+        },
+        plugins: {
+            legend: {
+                position: 'top'
+            }
+        }
+    }
+});
+
     
         // Populate client list
         const clientList = document.getElementById('clientList');
